@@ -1,0 +1,24 @@
+{
+  "name": "Liri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "keys.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shadowmeow/Liri.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shadowmeow/Liri/issues"
+  },
+  "homepage": "https://github.com/Shadowmeow/Liri#readme",
+  "dependencies": {
+    "request": "^2.81.0",
+    "twitter": "^1.7.0"
+  }
+}
