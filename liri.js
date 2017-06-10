@@ -1,10 +1,10 @@
 var action = process.argv[2];
 var value = process.argv[3];
 var Twitter = require("twitter");
-var keys = require("keys");
+var keys = "keys.js";
 var client = new Twitter(keys.twitterKeys);
 var params = {
-    screen_name: process.argv[3],
+    screen_name: "Meow",
     count: 20
     }
 var request = require("request");
@@ -14,13 +14,13 @@ switch (action) {
     case "my-tweets":
         tweets();
         break;
-    case "spotify-this-song":
+    case "spotify":
         spotifyThis(value);
         break;
-    case "movie-this":
+    case "movie":
         movieThis(value);
         break;
-    case "do-what-it-says":
+    case "do":
         random();
         break;
 }
@@ -28,10 +28,11 @@ switch (action) {
 function tweets() {
     client.get("statuses/user_timeline", params, function(error, tweets, response) {
         if (!error && response.statusCode === 200) {
-            fs.appendFile("terminal.log", ("=========== LOG BEGIN ===========\r\n" + Date() + "\r\n \r\nTERMINAL COMMANDS:\r\n$: " + process.argv + "\r\n \r\nDATA OUTPUT:\r\n"), function(err) {
+            fs.appendFile("terminal.log", ("=========== LOG BEGIN ===========\r\n" + 
+                Date() + "\r\n \r\nTERMINAL COMMANDS:\r\n$: " + process.argv + 
+                "\r\n \r\nDATA OUTPUT:\r\n"), function(err) {
                 if (err) throw err;
             });
-            console.log(" ");
             console.log("Last 20 Tweets:")
             for (var i = 0; i < tweets.length; i++) {
                 console.log([i + 1] + ". " + tweets[i].text);
@@ -54,8 +55,9 @@ function spotifyThis(value) {
     if (value == null) {
         value = "blackout";
     }
+    spotify.getSong(value);
     request("https://api.spotify.com/v1/search?q=" + value + "&type=track", function(error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error) {
             var jsonBody = JSON.parse(body);
             var items = jsonBody.tracks.items[0];
             console.log("Artist: " + items.artists[0].name);
@@ -83,7 +85,7 @@ function movieThis(value) {
         value = "kittens";
     }
     request("http://www.omdbapi.com/?t=" + value + "&tomatoes=true&r=json", function(error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error) {
             var jsonBody = JSON.parse(body);
             console.log(" ");
             console.log("Title: " + jsonBody.Title);
