@@ -1,7 +1,9 @@
 var action = process.argv[2];
 var value = process.argv[3];
+//get twitter npm
 var Twitter = require("twitter");
 var keys = "keys.js";
+//make new twitter and insert keys
 var client = new Twitter(keys.twitterKeys);
 var params = {
     screen_name: "Meow",
@@ -26,7 +28,9 @@ switch (action) {
 }
 
 function tweets() {
+    //go to twitter api to get the tweets of the user
     client.get("statuses/user_timeline", params, function(error, tweets, response) {
+        //if no error, begin going through data appending and printing the tweets out
         if (!error && response.statusCode === 200) {
             fs.appendFile("terminal.log", ("=========== LOG BEGIN ===========\r\n" + 
                 Date() + "\r\n \r\nTERMINAL COMMANDS:\r\n$: " + process.argv + 
@@ -52,12 +56,15 @@ function tweets() {
 }
 
 function spotifyThis(value) {
+    //mno value default
     if (value == null) {
         value = "blackout";
     }
+    //go to spotify and grab the data for the song
     spotify.getSong(value);
     request("https://api.spotify.com/v1/search?q=" + value + "&type=track", function(error, response, body) {
         if (!error) {
+            //go through the the data if no error and then print and record data to a file
             var jsonBody = JSON.parse(body);
             var items = jsonBody.tracks.items[0];
             console.log("Artist: " + items.artists[0].name);
@@ -81,10 +88,13 @@ function spotifyThis(value) {
 }
 
 function movieThis(value) {
+    //no value default
     if (value === null) {
         value = "kittens";
     }
+    //go to omdbapi and grab data for the movie
     request("http://www.omdbapi.com/?t=" + value + "&tomatoes=true&r=json", function(error, response, body) {
+        // no error so parse the JSon and print out the data and append it to file
         if (!error) {
             var jsonBody = JSON.parse(body);
             console.log(" ");
